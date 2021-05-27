@@ -1,0 +1,45 @@
+
+{% extends 'formations/base.html' %}
+
+
+
+{% block content %}
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/"> Liste des formations</a>
+        <a class="navbar-brand" href="/admin"> Administration</a>
+    </div>
+</nav>
+
+<br>
+
+
+	<form action="{% url 'formation_list' %}" method="get"  class="form-inline justify-content-center" >
+		<input name="q" class="form-control mr-sm-2" type="search" placeholder="Nom de formation ou categorie" size="50" aria-label="Search" >
+	    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	</form>
+
+
+
+<section class="container">
+	<div class="row">
+		<div class="col">
+			{% for formation in formations %}
+			<div class="card mt-3">
+				<div class="card-body d-flex align-items-center justify-content-between">
+					<img src= {{formation.logo.url}} class="rounded float-left" alt="..." heigt=50px width=50px>
+					<h5><a href="{{ formation.get_absolute_url }}">{{ formation.title }}</a></h5>
+					<span class="badge badge-info p-2">{{ formation.category|title }}</span>
+					{% if formation.etat == 'active' %}
+					<span class="badge badge-success p-2">{{ formation.etat|title }}</span>
+					{% else %}
+					<span class="badge badge-danger p-2">{{ formation.etat|title }}</span>
+					{% endif %}
+
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+{% endblock %}
